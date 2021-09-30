@@ -18,29 +18,36 @@ func get_input():
 
 	# movimenta o personagem, podendo ter entradas simultaneas pra
 	# movimentação diagonal
+	# ui_right = Seta para direita ou D
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += 1
+	# ui_left = Seta para esquerda ou A
 	if Input.is_action_pressed("ui_left"):
 		velocity.x -= 1
+	# ui_up = Seta para cima ou W
 	if Input.is_action_pressed("ui_up"):
 		velocity.y -= 1
+	# ui_down = Seta para baixo ou S
 	if Input.is_action_pressed("ui_down"):
 		velocity.y += 1
 	velocity = velocity.normalized() * speed
 
 	# troca para a arma anterior
+	# Trocar_armaEsq = Q ou U
 	if Input.is_action_just_pressed("Trocar_armaEsq"):
 		match arma_atual:
 			0: arma_atual = 2
 			_: arma_atual -= 1
 
 	# troca para a arma seguinte
+	# Trocar_armaDir = E ou O
 	if Input.is_action_just_pressed("Trocar_armaDir"):
 		match arma_atual:
 			2: arma_atual = 0
 			_: arma_atual += 1
 
 	# atira o projétil da arma atual
+	# Atirar = Z ou J
 	if Input.is_action_just_pressed("Atirar"):
 		match arma_atual:
 			0: emit_signal("create_bullet", bullet, global_position)
