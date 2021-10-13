@@ -36,3 +36,12 @@ func _on_Player_creat_bullet_3(bullet_1, bullet_2, pos):
 
 	bullet_2_instance.global_position.x = pos.x + 5
 	bullet_2_instance.global_position.y = pos.y + 3
+
+
+
+func _on_Malware_Generator_Malware_Gerado(malware, location):
+	var malware_instance = malware.instance()
+	
+	add_child(malware_instance)
+	
+	malware_instance.global_position = location
