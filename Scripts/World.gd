@@ -1,5 +1,11 @@
 extends Node2D
 
+func _ready():
+	Global.World = self
+	
+func _exit_tree():
+	Global.World = null
+
 func _on_Player_create_bullet(bullet, pos):
 	var Player_Bullet_instance = bullet.instance()
 	add_child(Player_Bullet_instance)
@@ -45,3 +51,11 @@ func _on_Malware_Generator_Malware_Gerado(malware, location):
 	add_child(malware_instance)
 	
 	malware_instance.global_position = location
+
+
+func _on_Malware_Criar_Particulas_Malware_Destruido(particulas, location):
+	var particulas_instance = particulas.instance()
+	
+	add_child(particulas_instance)
+	
+	particulas_instance.global_position = location
