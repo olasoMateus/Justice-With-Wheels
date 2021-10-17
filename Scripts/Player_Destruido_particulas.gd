@@ -2,5 +2,6 @@ extends CPUParticles2D
 
 
 
+
 func _on_Timer_timeout():
-	queue_free()
+	get_tree().reload_current_scene()

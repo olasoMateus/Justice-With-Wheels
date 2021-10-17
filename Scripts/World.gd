@@ -43,19 +43,9 @@ func _on_Player_creat_bullet_3(bullet_1, bullet_2, pos):
 	bullet_2_instance.global_position.x = pos.x + 5
 	bullet_2_instance.global_position.y = pos.y + 3
 
-
-
-func _on_Malware_Generator_Malware_Gerado(malware, location):
-	var malware_instance = malware.instance()
+func node_instance(node, pos):
+	var node_instance = node.instance()
 	
-	add_child(malware_instance)
+	add_child(node_instance)
 	
-	malware_instance.global_position = location
-
-
-func _on_Malware_Criar_Particulas_Malware_Destruido(particulas, location):
-	var particulas_instance = particulas.instance()
-	
-	add_child(particulas_instance)
-	
-	particulas_instance.global_position = location
+	node_instance.global_position = pos

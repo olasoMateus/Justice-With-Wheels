@@ -11,10 +11,18 @@ script = ExtResource( 2 )
 speed = 100
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1.43325, 1.09164 )
+position = Vector2( 0, 1.19209e-07 )
 scale = Vector2( 0.0101907, 0.00830961 )
 texture = ExtResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource( 1 )
+
+[node name="Tempo_Reload" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="timeout" from="Tempo_Reload" to="." method="_on_Tempo_Reload_timeout"]
