@@ -16,6 +16,8 @@ var velocity = Vector2()
 var arma_atual = 0 # variavel para controlar arma equipada
 var pode_atirar = true # se pode ou não atirar
 var vida = 3
+var player_size = 4
+var arma_disponivel = [true, true, true]
 
 func get_input():
 	velocity = Vector2()
@@ -23,16 +25,17 @@ func get_input():
 	# movimenta o personagem, podendo ter entradas simultaneas pra
 	# movimentação diagonal
 	# ui_right = Seta para direita ou D
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("ui_right") && global_position.x < Global.WorldLimits.x - player_size:
+		print(global_position.x, Global.WorldLimits.x)
 		velocity.x += 1
 	# ui_left = Seta para esquerda ou A
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("ui_left") && global_position.x >= player_size:
 		velocity.x -= 1
 	# ui_up = Seta para cima ou W
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_up") && global_position.y > player_size:
 		velocity.y -= 1
 	# ui_down = Seta para baixo ou S
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down") && global_position.y < Global.WorldLimits.y - player_size:
 		velocity.y += 1
 	velocity = velocity.normalized() * speed
 
@@ -53,13 +56,15 @@ func get_input():
 	# atira o projétil da arma atual
 	# Atirar = Z ou J
 	if Input.is_action_pressed("Atirar") && pode_atirar:
-		match arma_atual:
-			0: emit_signal("create_bullet", bullet, global_position)
-			1: emit_signal("create_bullet_2", bullet_mid, bullet_down,
-				bullet_up, global_position)
-			2: emit_signal("creat_bullet_3", bullet_y, bullet_y,
-				global_position)
-		$Tempo_Reload.start()
+		if (arma_disponivel[arma_atual]):
+			match arma_atual:
+				0: emit_signal("create_bullet", bullet, global_position)
+				1: emit_signal("create_bullet_2", bullet_mid, bullet_down,
+					bullet_up, global_position)
+				2: emit_signal("creat_bullet_3", bullet_y, bullet_y,
+					global_position)
+		print(global_position)
+		$Tempo_Reload.start(Global.ReloadTime)
 		pode_atirar = false
 		
 func _ready():
