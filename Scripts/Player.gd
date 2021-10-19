@@ -17,7 +17,6 @@ var arma_atual = 0 # variavel para controlar arma equipada
 var pode_atirar = true # se pode ou não atirar
 var vida = 3
 var player_size = 4
-var arma_disponivel = [true, true, true]
 
 func get_input():
 	velocity = Vector2()
@@ -43,27 +42,25 @@ func get_input():
 	# Trocar_armaEsq = Q ou U
 	if Input.is_action_just_pressed("Trocar_armaEsq"):
 		match arma_atual:
-			0: arma_atual = 2
-			_: arma_atual -= 1
+			0: arma_atual = 2 if Global.ArmasDisponiveis[2] else 0
+			_: arma_atual -= 1 if Global.ArmasDisponiveis[arma_atual - 1] else 0
 
 	# troca para a arma seguinte
 	# Trocar_armaDir = E ou O
 	if Input.is_action_just_pressed("Trocar_armaDir"):
 		match arma_atual:
-			2: arma_atual = 0
-			_: arma_atual += 1
+			2: arma_atual = 0 if Global.ArmasDisponiveis[0] else arma_atual
+			_: arma_atual += 1 if Global.ArmasDisponiveis[arma_atual + 1] else 0
 
 	# atira o projétil da arma atual
 	# Atirar = Z ou J
 	if Input.is_action_pressed("Atirar") && pode_atirar:
-		if (arma_disponivel[arma_atual]):
-			match arma_atual:
-				0: emit_signal("create_bullet", bullet, global_position)
-				1: emit_signal("create_bullet_2", bullet_mid, bullet_down,
-					bullet_up, global_position)
-				2: emit_signal("creat_bullet_3", bullet_y, bullet_y,
-					global_position)
-		print(global_position)
+		match arma_atual:
+			0: emit_signal("create_bullet", bullet, global_position)
+			1: emit_signal("create_bullet_2", bullet_mid, bullet_down,
+				bullet_up, global_position)
+			2: emit_signal("creat_bullet_3", bullet_y, bullet_y,
+				global_position)
 		$Tempo_Reload.start(Global.ReloadTime)
 		pode_atirar = false
 		

@@ -1,7 +1,7 @@
 extends Node
 
 # precisa do sprite pra dar load certo
-var overclock = preload("res://Scenes/Player_Bullet_2_down.tscn")
+var arma2 = preload("res://Scenes/Player_Bullet_2_down.tscn")
 
 signal node_instance(node, pos)
 
@@ -17,8 +17,9 @@ func _process(delta):
 # como criar um timer
 func _on_Hitbox_area_entered(area):
 	if area.is_in_group("Player"):
-		Global.ReloadTime -= 0.10
-		Global.Player.speed = 300
 		queue_free()
+		Global.ArmasDisponiveis[2] = true
 		
 	
+
+
