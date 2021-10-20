@@ -1,24 +1,25 @@
-extends Node
+extends Sprite
 
 # precisa do sprite pra dar load certo
-var overclock = preload("res://Scenes/Player_Bullet_2_down.tscn")
 
-signal node_instance(node, pos)
+signal pegou_overclock()
 
 func _ready():
-	if Global.World != null:
-		connect("node_instance", Global.World, "node_instance")
+	if Global.World != null and Global.Player != null:
+		connect("pegou_overclock", Global.Player, "pegou_overclock")
 
 func _process(delta):
-	pass
+	global_position.x -= Global.WorldSpeed/2 * delta
+	
+	if global_position.x < -20:
+		queue_free()
 
 # quando o player bater nessa parada tem que reduzir o reload time (deixar a arma mais rápida)
 # e deixar o jogador mais rápido também, ai lanćar um counter pro buff acabar, mas não tô ligado 
 # como criar um timer
 func _on_Hitbox_area_entered(area):
 	if area.is_in_group("Player"):
-		Global.ReloadTime -= 0.10
-		Global.Player.speed = 300
+		emit_signal("pegou_overclock")
 		queue_free()
 		
 	

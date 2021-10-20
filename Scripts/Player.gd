@@ -57,11 +57,21 @@ func get_input():
 	if Input.is_action_pressed("Atirar") && pode_atirar:
 		match arma_atual:
 			0: emit_signal("create_bullet", bullet, global_position)
-			1: emit_signal("create_bullet_2", bullet_mid, bullet_down,
+			1: 
+				emit_signal("create_bullet_2", bullet_mid, bullet_down,
 				bullet_up, global_position)
-			2: emit_signal("creat_bullet_3", bullet_y, bullet_y,
+				Global.ArmasAmmo[0] -= 1
+				if Global.ArmasAmmo[0] == 0:
+					Global.ArmasDisponiveis[1] = false
+					arma_atual = 0
+			2: 
+				emit_signal("creat_bullet_3", bullet_y, bullet_y,
 				global_position)
-		$Tempo_Reload.start(Global.ReloadTime)
+				Global.ArmasAmmo[1] -= 1
+				if Global.ArmasAmmo[1] == 0:
+					Global.ArmasDisponiveis[2] = false
+					arma_atual = 0
+		$Tempo_Reload.start()
 		pode_atirar = false
 		
 func _ready():
@@ -82,13 +92,26 @@ func _on_Hitbox_area_entered(area):
 	if area.is_in_group("Inimigo"):
 		area.get_parent().queue_free()
 		vida -= 1
-			
+	elif area.is_in_group("Vida"):
+		area.get_parent().queue_free()
+		if vida < 3:
+			vida += 1
 
 
 func _on_Tempo_Reload_timeout():
 	pode_atirar = true
 	$Tempo_Reload.stop()
 	
+func pegou_overclock():
+	speed += 10
+	$Tempo_Reload.wait_time -= 0.05
+	if Global.OverclockNumber < 3 : Global.OverclockNumber += 1
+	Global.WorldSpeed += 10
+	
 func _exit_tree():
 	Global.Player = null
 	Global.Pontos = 0
+	Global.ArmasDisponiveis = [true, false, false]
+	Global.ArmasAmmo = [0, 0]
+	Global.Arma_atual = 0
+	Global.OverclockNumber = 0
