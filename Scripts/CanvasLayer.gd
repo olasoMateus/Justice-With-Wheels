@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 
-func _process(delta):
+func _process(_delta):
 	match Global.Arma_atual:
 		0:
 			$S_icone.modulate = Color(1, 1, 1)

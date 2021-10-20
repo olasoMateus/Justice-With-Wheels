@@ -1,7 +1,7 @@
 extends Label
 
 
-func _process(delta):
+func _process(_delta):
 	text = String(Global.ArmasAmmo[1])
 	if text == "0":
 		visible_characters = 0
