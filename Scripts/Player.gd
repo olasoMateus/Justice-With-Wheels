@@ -55,6 +55,7 @@ func get_input():
 	# atira o projétil da arma atual
 	# Atirar = Z ou J
 	if Input.is_action_pressed("Atirar") && pode_atirar:
+		Global.TocarSom("Tiro")
 		match arma_atual:
 			0: emit_signal("create_bullet", bullet, global_position)
 			1: 
