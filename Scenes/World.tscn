@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/World.gd" type="Script" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://laser.ogg" type="AudioStream" id=16]
 [ext_resource path="res://Scripts/ControladoSom.gd" type="Script" id=17]
 [ext_resource path="res://SL_032321_41610_13.jpg" type="Texture" id=18]
+[ext_resource path="res://music/01.ogg" type="AudioStream" id=19]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
@@ -123,11 +124,16 @@ position = Vector2( 81, 34 )
 scale = Vector2( 0.0231395, 0.019542 )
 texture = ExtResource( 18 )
 
+[node name="Musica_Nivel1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+autoplay = true
+
 [node name="ControladoSom" type="Node" parent="."]
 script = ExtResource( 17 )
 
 [node name="Tiro" type="AudioStreamPlayer" parent="ControladoSom"]
 stream = ExtResource( 16 )
+volume_db = 6.0
 
 [connection signal="creat_bullet_3" from="Player" to="." method="_on_Player_creat_bullet_3"]
 [connection signal="create_bullet" from="Player" to="." method="_on_Player_create_bullet"]

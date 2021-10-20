@@ -1,5 +1,5 @@
 extends Sprite
 
-func _process(delta):
+func _process(_delta):
 	if Global.Player != null:
 		frame = Global.Player.vida
